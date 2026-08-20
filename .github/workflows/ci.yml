@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # 타입 검사와 자동 점검은 Electron 바이너리 없이 Node 로만 돌아간다.
+  # 패키지의 타입 정의는 그대로 설치되므로 150MB 바이너리 내려받기를 생략한다.
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+jobs:
+  verify:
+    name: 타입 검사 + 자동 점검
+    # 배포 대상이 Windows 설치파일이므로 같은 OS 에서 검증한다.
+    runs-on: windows-latest
+
+    steps:
+      - name: 소스 가져오기
+        uses: actions/checkout@v7
+
+      - name: Node 24 준비
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 타입 검사 (화면 · 서버 2개 프로젝트)
+        run: npm run typecheck
+
+      - name: 자동 점검 (서버 구동 + API 80개 항목)
+        run: npm run smoke
+
+      - name: 문서 점검 (인코딩 · README 링크)
+        run: npm run check:docs

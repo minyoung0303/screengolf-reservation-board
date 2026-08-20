@@ -10,6 +10,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
 ![runtime deps](https://img.shields.io/badge/런타임_의존성-0개-success)
 ![tests](https://img.shields.io/badge/자동_점검-80개_통과-success)
+![license](https://img.shields.io/badge/license-AGPL--3.0-blue)
+[![CI](https://github.com/minyoung0303/screengolf-reservation-board/actions/workflows/ci.yml/badge.svg)](https://github.com/minyoung0303/screengolf-reservation-board/actions/workflows/ci.yml)
 
 ![예약판](docs/images/board.png)
 
@@ -245,7 +247,31 @@ npm run typecheck   # 타입 검사
 
 ## 라이선스
 
-미정 (`LICENSE` 추가 예정)
+**GNU Affero General Public License v3.0** (AGPL-3.0-only) — 전문 [`LICENSE`](LICENSE)
+
+Copyright (C) 2026 ANBambi (Minyoung Lee)
+
+| 행위 | 조건 |
+|---|---|
+| 원본을 그대로 설치해 매장에서 사용 | 자유. 아무 의무 없음 |
+| 사용 · 복제 · 학습 · 상업적 이용 | 자유 |
+| 수정본 배포 | 수정본 전체를 동일한 AGPL-3.0 으로 공개 |
+| 수정본을 네트워크로 서비스 (SaaS 등) | 이용자에게 해당 소스 제공 (§13) |
+
+즉 이 코드를 고쳐서 남에게 제공하려면 고친 소스도 함께 공개해야 합니다.
+매장에서 쓰는 직원·관리자에게는 어떤 의무도 발생하지 않습니다.
+
+### 상업 라이선스
+
+소스 공개 없이 이 코드를 자사 제품에 포함하거나, 재판매·구독형 서비스로 운영하려는 경우
+저작권자와 별도 계약으로 상업 라이선스를 받을 수 있습니다 (듀얼 라이선스).
+
+문의: [GitHub Issues](https://github.com/minyoung0303/screengolf-reservation-board/issues)
+
+### 상표
+
+`예약보드`, `YeyakBo` 이름과 아이콘은 라이선스 적용 대상이 아니며 저작권자가 보유합니다.
+포크한 결과물에는 다른 이름을 사용해 주세요.
 
 ---
 
