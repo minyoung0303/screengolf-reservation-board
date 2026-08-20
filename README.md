@@ -7,7 +7,7 @@
 ![Electron](https://img.shields.io/badge/Electron-43-47848F)
 ![Node](https://img.shields.io/badge/Node-24-339933)
 ![React](https://img.shields.io/badge/React-19-61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
+![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)
 ![runtime deps](https://img.shields.io/badge/런타임_의존성-0개-success)
 ![tests](https://img.shields.io/badge/자동_점검-80개_통과-success)
 ![license](https://img.shields.io/badge/license-AGPL--3.0-blue)
@@ -26,7 +26,7 @@
 | 해결 | 소요시간 자동 계산 + 저장 단계 중복 차단 + 마감 시 대안 시간 제시 |
 | 환경 | Windows 10 PC 1대 + 직원 폰·태블릿 (브라우저 접속) |
 | 배포 | 설치파일(.exe) 1개. 인터넷·클라우드·구독료 없음 |
-| 상태 | 실사용 배포 완료 (v1.0.2) |
+| 상태 | 매장 실사용 중. 설치파일은 [Releases](https://github.com/minyoung0303/screengolf-reservation-board/releases/latest) 에서 받으실 수 있습니다 |
 
 ---
 
@@ -148,7 +148,7 @@ scripts/    빌드 · 자동 점검 · 시범 데이터 · 화면 캡처 · PDF 
 | QR 코드 | `qrcode-generator` | 빌드 시 번들. 외부 API 호출 없음 |
 | 패키징 | electron-builder (NSIS) | 코드 서명 미사용 → 비용 0, 첫 실행 경고 1회 |
 
-**런타임 의존성 0개.** `package.json`의 `dependencies` 비어 있음. 배포물은 번들된 `dist` 뿐.
+**런타임 의존성 0개.** `package.json`에 `dependencies` 항목이 아예 없음. 배포물은 번들된 `dist` 뿐.
 설치 시점에 인터넷·컴파일러 불필요.
 
 ---
@@ -192,32 +192,74 @@ PIN 노출 가능. 중요 비밀번호를 PIN으로 사용하지 않도록 매�
 - 구버전 데이터 파일 → 신버전 실행 시 예약·설정·PIN 유지 확인 (업그레이드 경로)
 - 백업 파일 복원 절차 실측 확인
 
+### 자동 실행
+
+위 세 가지(타입 검사 · 자동 점검 80항목 · 문서 점검)를 push 와 pull request 마다
+GitHub Actions 가 `windows-latest` + Node 24 에서 실행합니다 ([`ci.yml`](.github/workflows/ci.yml)).
+배포 대상과 같은 OS 에서 검증하려고 Windows 러너를 씁니다.
+
 ---
 
-## 실행 방법
+## 설치
+
+매장에서 쓰실 분은 이 항목만 보시면 됩니다. 개발 도구를 설치할 필요는 없습니다.
+
+### 1. 설치파일 받기
+
+[**최신 릴리스 다운로드**](https://github.com/minyoung0303/screengolf-reservation-board/releases/latest) → `YeyakBo-Setup-1.0.3.exe`
+
+설치파일은 저장소에 포함되어 있지 않습니다. 용량이 큰 파일을 커밋에 쌓지 않기 위해
+릴리스 페이지에 따로 올립니다. 태그를 올릴 때마다 GitHub Actions 가 Windows 에서 빌드해
+자동으로 첨부합니다 ([`release.yml`](.github/workflows/release.yml)).
+
+### 2. 설치하기
+
+| 단계 | 화면에 뜨는 것 | 하실 일 |
+|---|---|---|
+| 1 | 파일 실행 | 받은 `YeyakBo-Setup-1.0.3.exe` 를 두 번 클릭 |
+| 2 | "Windows 의 PC 보호" 경고 | **추가 정보** → **실행** |
+| 3 | 설치 위치 선택 | 그대로 두고 **설치** |
+| 4 | 방화벽 알림 | **개인 네트워크 허용** 에 체크 |
+| 5 | 앱의 PIN 설정 화면 | 숫자 4~8 자리 입력 |
+
+2단계 경고는 코드 서명 인증서를 쓰지 않아서 뜹니다. 인증서는 연 수십만 원이 들고
+매장 한 곳에 쓰는 프로그램에는 과한 비용이라 넣지 않았습니다. 바이러스가 아니라
+"만든 사람이 돈을 내고 신원을 증명하지 않았다"는 뜻입니다. 빌드 과정은
+[`release.yml`](.github/workflows/release.yml) 에 전부 공개되어 있습니다.
+
+4단계를 건너뛰면 **폰·태블릿 접속이 안 됩니다.** 이 프로그램은 카운터 PC 가 매장 와이파이 안에서
+작은 서버 역할을 하기 때문에, 방화벽이 막으면 폰에서 접속할 수 없습니다.
+놓치셨다면 Windows 방화벽 설정에서 `예약보드` 의 개인 네트워크를 허용하시면 됩니다.
+
+설치가 끝나면 기본값 상태로 바로 쓸 수 있습니다 (타석 10개, 08:30~21:00, 1인 1게임 30분, 정리 10분).
+자세한 사용법은 [설치 · 사용 매뉴얼](docs/manual/설치_매뉴얼.md) 에 있습니다.
+
+---
+
+## 소스에서 빌드
 
 Node 24 이상 필요 (`node:sqlite` 사용)
 
 ```bash
+git clone https://github.com/minyoung0303/screengolf-reservation-board.git
+cd screengolf-reservation-board
 npm install
-npm run icon        # 아이콘 생성 (build/, public/)
+npm run dist        # Windows 설치파일 생성 → release/YeyakBo-Setup-1.0.3.exe
+```
+
+아이콘(`build/icon.png`, `public/`)은 저장소에 포함되어 있어 별도 생성이 필요 없습니다.
+
+```bash
 npm run dev         # Vite + Electron 개발 모드
 npm run build       # 번들 (dist/main, dist/renderer)
 npm run smoke       # 자동 점검 (API 80개 항목)
-npm run dist        # Windows 설치파일 생성 (release/)
+npm run typecheck   # 타입 검사
+npm run check:docs  # 문서 인코딩·링크 점검
 npm run demo        # 시범 데이터 생성 (임시 폴더, 실제 데이터와 분리)
+npm run icon        # 아이콘 재생성 (build/, public/)
 npm run shots       # 문서용 화면 캡처 (docs/images)
 npm run docs        # 매뉴얼 → PDF 변환
-npm run typecheck   # 타입 검사
 ```
-
-### 매장 설치
-
-1. 설치파일 `YeyakBo-Setup-1.0.2.exe` 실행 (저장소 미포함. Releases 또는 `npm run dist`)
-2. SmartScreen 경고 → 추가 정보 → 실행 (코드 서명 미사용)
-3. 방화벽 → 개인 네트워크 허용 (폰 접속 필수 조건)
-4. 첫 실행 시 PIN 설정
-5. 기본값 적용 상태로 즉시 사용 (타석 10개, 08:30~21:00, 1인 1게임 30분, 정리 10분)
 
 ---
 
