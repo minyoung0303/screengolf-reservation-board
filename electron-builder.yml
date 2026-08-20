@@ -1,0 +1,38 @@
+appId: com.anbambi.yeyakbo
+productName: YeyakBo
+copyright: 예약보드
+
+directories:
+  output: release
+  buildResources: build
+
+# 런타임 의존성이 없다. dist 안의 번들과 화면 파일만 담으면 동작한다.
+files:
+  - dist/main/**
+  - dist/renderer/**
+  - package.json
+
+asar: true
+npmRebuild: false
+buildDependenciesFromSource: false
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.png
+  # 코드 서명 인증서를 쓰지 않는다. 첫 실행 때 Windows 경고창이 한 번 뜬다.
+  signAndEditExecutable: true
+  artifactName: YeyakBo-Setup-${version}.exe
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: 예약보드
+  language: '1042'
+  deleteAppDataOnUninstall: false

@@ -1,0 +1,22 @@
+# 의존성
+node_modules/
+
+# 빌드 산출물
+dist/
+release/
+
+# 로그·임시 파일
+*.log
+npm-debug.log*
+.tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 실제 매장 데이터는 절대 올리지 않는다 (손님 이름·연락처 포함)
+*.db
+*.db-wal
+*.db-shm
+backups/
