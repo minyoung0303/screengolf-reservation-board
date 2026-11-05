@@ -206,7 +206,7 @@ GitHub Actions 가 `windows-latest` + Node 24 에서 실행합니다 ([`ci.yml`]
 
 ### 1. 설치파일 받기
 
-[**최신 릴리스 다운로드**](https://github.com/minyoung0303/screengolf-reservation-board/releases/latest) → `YeyakBo-Setup-1.0.3.exe`
+[**최신 릴리스 다운로드**](https://github.com/minyoung0303/screengolf-reservation-board/releases/latest) → `YeyakBo-Setup-1.0.4.exe`
 
 설치파일은 저장소에 포함되어 있지 않습니다. 용량이 큰 파일을 커밋에 쌓지 않기 위해
 릴리스 페이지에 따로 올립니다. 태그를 올릴 때마다 GitHub Actions 가 Windows 에서 빌드해
@@ -216,7 +216,7 @@ GitHub Actions 가 `windows-latest` + Node 24 에서 실행합니다 ([`ci.yml`]
 
 | 단계 | 화면에 뜨는 것 | 하실 일 |
 |---|---|---|
-| 1 | 파일 실행 | 받은 `YeyakBo-Setup-1.0.3.exe` 를 두 번 클릭 |
+| 1 | 파일 실행 | 받은 `YeyakBo-Setup-1.0.4.exe` 를 두 번 클릭 |
 | 2 | "Windows 의 PC 보호" 경고 | **추가 정보** → **실행** |
 | 3 | 설치 위치 선택 | 그대로 두고 **설치** |
 | 4 | 방화벽 알림 | **개인 네트워크 허용** 에 체크 |
@@ -244,7 +244,8 @@ Node 24 이상 필요 (`node:sqlite` 사용)
 git clone https://github.com/minyoung0303/screengolf-reservation-board.git
 cd screengolf-reservation-board
 npm install
-npm run dist        # Windows 설치파일 생성 → release/YeyakBo-Setup-1.0.3.exe
+npm run dist        
+# Windows 설치파일 생성 → release/YeyakBo-Setup-1.0.4.exe
 ```
 
 아이콘(`build/icon.png`, `public/`)은 저장소에 포함되어 있어 별도 생성이 필요 없습니다.
