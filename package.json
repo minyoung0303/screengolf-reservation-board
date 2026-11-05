@@ -17,7 +17,7 @@
     "shots": "electron scripts/screenshots.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
     "start": "npm run build && electron .",
-    "dist": "npm run build && electron-builder --win --x64"
+    "dist": "npm run build && electron-builder --win --x64 --publish never"
   },
   "devDependencies": {
     "@types/node": "26.2.0",
